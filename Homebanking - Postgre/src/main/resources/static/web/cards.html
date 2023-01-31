@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="./assets/img/">
+</head>
+
+<body>
+<div id="app">
+    <header >
+        <nav class="navbar navbar-expand-lg bg-light">
+            <div class="">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse d-lg-flex justify-content-lg-evenly align-items-lg-center"
+                id="navbarNav">
+                <div class="col-4">
+                    <a class="navbar-brand mx-lg-5" href="#"><img class="logo-img"
+                            src="./assets/img/mindhu_brothers.png" alt=""></a>
+                </div>
+                <ul class="navbar-nav navbarItems col-4 d-lg-flex justify-content-lg-around align-items-lg-center">
+                    <li class="nav-item ms-lg-5">
+                        <a class="nav-hover" aria-current="page" href="./transfers.html"><i class="bi bi-bank pe-1"></i>Transfer</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-hover" href="./accounts.html"><i class="bi bi-person-circle pe-1"></i>accounts</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-hover me-lg-5" href="./cards.html"><i class="bi bi-credit-card-2-front-fill pe-1"></i>cards</a>
+                      </li>
+                      
+                </ul>
+                <div class="col-4">
+                    <div class="d-lg-flex float-lg-end align-items-lg-center">
+                        <div class="dropdown-center me-lg-4">
+                            <h5> Hi:{{clients.firstName}} {{clients.lastName}} </h5>
+                            <h5>{{clients.email}}</h5>
+
+                            <ul class="dropdown-menu dropdown-menu-lg-end">
+                                <li><a class="dropdown-item" href="#"><i
+                                            class="bi bi-box-arrow-right pe-1"></i>Settings</a></li>
+                            </ul>
+                        </div>
+                        <div class="dropdown-center me-lg-5 ">
+                            <a class=" bg-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img class="profile"
+                                    src="./assets/img/melviña.jpg"
+                                    alt="">
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-lg-end">
+                                <li @click="logOut"><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right pe-1"></i>Sing
+                                        Out</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container-fluid">
+        <div class="text-center">
+            <button class="btn btn-primary" v-if="cards.length < '6'" @click="createCards">Create Cards</button>
+            <h4 v-else>can only have 6 cards</h4>
+        </div>
+        <div class="row">
+            <div class="col-xl-6 d-flex flex-wrap justify-content-around">
+                <div v-for="card in creditCard" class="col-xl-5 cards mt-5">
+                    <h2 class="text-center">Credit Card</h2>
+                    <div v-if="creditCard.length !== '0'" class="card mx-auto">
+                        <div :class="{ 'card_gold' : card.cardColor == 'GOLD' , 'card_silver' : card.cardColor == 'SILVER' , 'card_titanium' : card.cardColor == 'TITANIUM' }"
+                            class="card__front">
+                            <img class="card__front-square card__square1" src="./assets/img/chip.png">
+                            <img class="card__front-logo card__logo"
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Visa_Logo.png/640px-Visa_Logo.png">
+                            <p class="card_numer">{{card.number}}</p>
+                            <div class="card__space-75">
+                                <span class="card__label">Card holder</span>
+                                <p class="card__info">{{card.cardHolder}}</p>
+                            </div>
+                            <div class="card__space-25">
+                                <span class="card__label">Expires</span>
+                                <p class="card__info">{{newDate(card.fromDate)}}</p>
+                            </div>
+                        </div>
+                        <div :class="{ 'card_gold' : card.cardColor == 'GOLD' , 'card_silver' : card.cardColor == 'SILVER' , 'card_titanium' : card.cardColor == 'TITANIUM' }"
+                            class="card-body card__back">
+                            <div class="card__black-line"></div>
+                            <div class="card__back-content">
+                                <div class="card__secret">
+                                    <p class="card__secret--last">{{card.cvv}}</p>
+                                </div>
+                                <img class="card__back-square card__square"
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Visa_Logo.png/640px-Visa_Logo.png">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="d-flex justify-content-center mt-3">
+                        <div>
+                            <p>Holder: {{card.cardHolder}}</p>
+                            <p>Card num: {{card.number}}</p>
+                            <p>CVV: {{card.cvv}}</p>
+                            <p>Expire: {{newDate(card.fromDate)}}</p>
+                            <p>Activity date: {{newDate(card.thruDate)}}</p>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="text-center" v-if="creditCard.length == '0'">
+                    <h3>Do not you have a credit card</h3>
+                </div>
+            </div>
+            <div class=" col-xl-6 d-flex flex-wrap justify-content-around">
+                <div v-for="card in debitCard" class="col-xl-5 cards mt-5">
+                    <h2 class="text-center">Debit Card</h2>
+                    <div v-if="creditCard.length !== '0'" class="card mx-auto">
+                        <div :class="{ 'card_gold' : card.cardColor == 'GOLD' , 'card_silver' : card.cardColor == 'SILVER' , 'card_titanium' : card.cardColor == 'TITANIUM' }"
+                            class="card__front">
+                            <img class="card__front-square card__square1" src="./assets/img/chip.png">
+                            <img class="card__front-logo card__logo"
+                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Visa_Logo.png/640px-Visa_Logo.png">
+                            <p class="card_numer">{{card.number}}</p>
+                            <div class="card__space-75">
+                                <span class="card__label">Card holder</span>
+                                <p class="card__info">{{card.cardHolder}}</p>
+                            </div>
+                            <div class="card__space-25">
+                                <span class="card__label">Expires</span>
+                                <p class="card__info">{{newDate(card.fromDate)}}</p>
+                            </div>
+                        </div>
+                        <div :class="{ 'card_gold' : card.cardColor == 'GOLD' , 'card_silver' : card.cardColor == 'SILVER' , 'card_titanium' : card.cardColor == 'TITANIUM' }"
+                            class="card-body card__back">
+                            <div class="card__black-line"></div>
+                            <div class="card__back-content">
+                                <div class="card__secret">
+                                    <p class="card__secret--last">{{card.cvv}}</p>
+                                </div>
+                                <img class="card__back-square card__square"
+                                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Visa_Logo.png/640px-Visa_Logo.png">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="d-flex justify-content-center mt-3">
+                        <div>
+                            <p>Holder: {{card.cardHolder}}</p>
+                            <p>Card num: {{card.number}}</p>
+                            <p>CVV: {{card.cvv}}</p>
+                            <p>Expire: {{newDate(card.fromDate)}}</p>
+                            <p>Activity date: {{newDate(card.thruDate)}}</p>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="text-center" v-if="debitCard.length == '0'">
+                    <h3>you don't have a debit card</h3>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+    <footer>
+        <h4>Brothers Bank @Copyrigth</h4>
+        
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+        crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/vue@3"></script>
+    <script src="./assets/cards.js"></script>
+</body>
+
+</html>

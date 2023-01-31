@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accounts</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="./assets/style.css">
+</head>
+
+<body>
+<div id="app">
+
+  <header >
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse d-lg-flex justify-content-lg-evenly align-items-lg-center"
+            id="navbarNav">
+            <div class="col-4">
+                <a class="navbar-brand mx-lg-5" href="#"><img class="logo-img"
+                        src="./assets/img/mindhu_brothers.png" alt=""></a>
+            </div>
+            <ul class="navbar-nav navbarItems col-4 d-lg-flex justify-content-lg-around align-items-lg-center">
+                <li class="nav-item ms-lg-5">
+                  <a class="nav-hover" aria-current="page" href="./transfers.html"><i class="bi bi-bank pe-1"></i>Transfer</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-hover" href="./accounts.html"><i class="bi bi-person-circle pe-1"></i>accounts</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-hover me-lg-5" href="./cards.html"><i class="bi bi-credit-card-2-front-fill pe-1"></i>cards</a>
+                  </li>
+            </ul>
+            <div class="col-4">
+                <div class="d-lg-flex float-lg-end align-items-lg-center">
+                    <div class="dropdown-center me-lg-4">
+                        <h5> Hi:{{client.firstName}} {{client.lastName}} </h5>
+                            <h5>{{client.email}}</h5>
+                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                            <li><a class="dropdown-item" href="#"><i
+                                        class="bi bi-box-arrow-right pe-1"></i>Settings</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown-center me-lg-5 ">
+                        <a class=" bg-light" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img class="profile"
+                                src="./assets/img/melviña.jpg"
+                                alt="">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-lg-end">
+                            <li @click="logOut"><a class="dropdown-item" href="#"><i class="bi bi-box-arrow-right pe-1"></i>Sing
+                                    Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+  <main  class="container">
+    <div class="row">
+      <div class="col-3 mt-5">
+        <div class="bg-light rounded shadow-lg text-center">
+          <div>
+            <img class="rounded-circle accounts-profile"
+              src="./assets/img/melviña.jpg" alt="">
+          </div>
+          <h5>{{client.firstName}} {{client.lastName}}</h5>
+          <h5>{{client.email}}<h5>
+               <!-- <div class="bg-light graficTotalBalance rounded"> -->
+                <!-- <canvas id="miChart"></canvas> -->
+                <h5 class="text-center">Total Balance: ${{totalBalance}}</h5> 
+              <!-- </div>  -->
+        </div>
+      </div> 
+      <div class="col-8">
+        <div class="">
+          <h2 class="text-center">Accounts</h2>
+          <div class="bg-light cards-accounts mt-2 p-2 rounded" v-for="account in accounts">
+            <div class="d-flex text-center align-items-center">
+              <h5 class="col">Account Number: {{account.number}}</h5>
+              <h5 class="col">Balance: $ {{account.balance}}</h5>
+              <h5 class="col">Creation Date: {{newDate(account.creationDate)}}</h5>
+              <a :href="'./account.html?id='+account.id" class="btn btn-outline-primary col-2">Transactions</a>
+            </div>
+          </div>
+        </div>
+        <div class="">
+          <h2 class="text-center">Loans</h2>
+          <button type="button" class="btn btn-primary"><a href="./loan-application.html">Ask for a loan!</a></button>
+          <p v-if="loans.length == 0">you dont have loans</p>
+          <div class="bg-light cards-accounts mt-2 p-2 rounded" v-for="loan in loans">
+            <div class="d-flex">
+              <h5 class="col">amount: ${{loan.amount}}</h5>
+              <h5 class="col">payments: {{loan.payments}}</h5>
+              <h5 class="col">name: {{loan.name}}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="CrearTarjeta">
+      <h3>Do you want a new account?</h3>
+      <button type="button" class="btn btn-primary" @click="newAccount">Click Me</button>
+  </div>
+  </main>
+
+  <footer>
+    <h4>Brothers Bank @Copyrigth</h4>
+    
+</footer>
+</div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.js"></script>
+  <script src="https://unpkg.com/vue@3"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./assets/accounts.js"></script>
+</body>
+
+</html>
